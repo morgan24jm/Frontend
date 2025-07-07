@@ -1,0 +1,60 @@
+<p-card [style]="{ width: '25rem', overflow: 'hidden' }">
+  <ng-template pTemplate="header">
+    <p><i class="pi pi-user" style="font-size: 2.5rem"></i></p>
+  </ng-template>
+
+  <ng-template pTemplate="title">Login</ng-template>
+  <ng-template pTemplate="subtitle">Inicie sesión en su cuenta</ng-template>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="p-inputgroup mb-3">
+      <span class="p-inputgroup-addon">
+        <i class="pi pi-user"></i>
+      </span>
+      <input
+        pInputText
+        formControlName="username"
+        placeholder="Username"
+        [class.ng-invalid]="loginForm.controls['username'].invalid && loginForm.controls['username'].touched"
+      />
+    </div>
+    <div *ngIf="loginForm.controls['username'].invalid && loginForm.controls['username'].touched" class="p-error mb-3">
+      El usuario es requerido.
+    </div>
+
+    <div class="p-inputgroup mb-3">
+      <span class="p-inputgroup-addon">
+        <i class="pi pi-lock"></i>
+      </span>
+      <input
+        pInputText
+        type="password"
+        formControlName="password"
+        placeholder="Password"
+        [class.ng-invalid]="loginForm.controls['password'].invalid && loginForm.controls['password'].touched"
+      />
+    </div>
+    <div *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched" class="p-error mb-3">
+      La contraseña es requerida.
+    </div>
+
+    <ng-template pTemplate="footer">
+      <div class="flex gap-4 mt-1">
+        <button
+          pButton
+          type="button"
+          label="Cancel"
+          class="p-button-secondary w-full"
+          (click)="loginForm.reset()"
+        ></button>
+        <button
+          pButton
+          type="submit"
+          label="Login"
+          class="w-full"
+          [disabled]="loginForm.invalid"
+        ></button>
+      </div>
+    </ng-template>
+  </form>
+</p-card>
