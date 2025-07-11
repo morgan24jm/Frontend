@@ -1,8 +1,17 @@
 import { Routes } from '@angular/router';
-import { AUTH_ROUTES } from './pages/auth/auth.routes';
+import { authGuard } from './core/auth/auth.guard';
+import { Error404Component } from './pages/error404/error404.component';  // <-- importa aquí
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/auth', pathMatch: 'full' },  // redirige a /auth
-  { path: 'auth', children: AUTH_ROUTES },              // las rutas hijas bajo /auth
-  { path: '**', redirectTo: '/auth' }
+  { path: '', redirectTo: '/auth', pathMatch: 'full' },
+  {
+    path: 'auth',
+    loadChildren: () => import('./pages/auth/auth.routes').then(m => m.AUTH_ROUTES)
+  },
+  {
+    path: 'task',
+    loadChildren: () => import('./pages/tasks/tasks.routes').then(m => m.TASK_ROUTES),
+    canActivate: [authGuard]
+  },
+  { path: '**', component: Error404Component }
 ];

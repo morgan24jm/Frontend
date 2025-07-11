@@ -1,0 +1,13 @@
+.completed {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.task-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.task-list li {
+  margin-bottom: 10px;
+}
