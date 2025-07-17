@@ -1,4 +1,8 @@
-<h2>Mis tareas</h2>
+<nav class="navbar p-d-flex p-jc-between p-ai-center p-p-3 p-shadow-2">
+  <h2 class="p-m-0" style="color: #3f51b5;">Mis tareas</h2>
+  <button pButton label="Cerrar sesión" icon="pi pi-sign-out" class="p-button-outlined p-button-danger" (click)="logout()"></button>
+</nav>
+
 <ul>
   <li *ngFor="let task of tasks">
     <strong>{{ task.description }}</strong> - {{ task.status }} - {{ task.deadline }}

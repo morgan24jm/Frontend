@@ -58,6 +58,10 @@
           <button pButton label="Iniciar sesión" class="p-button-text" routerLink="/auth/login"></button>
         </div>
       </form>
+      <div *ngIf="qrCodeBase64" style="text-align: center; margin-top: 2rem;">
+  <h4>Escanea este código QR con Google Authenticator:</h4>
+  <img [src]="'data:image/png;base64,' + qrCodeBase64" alt="QR de autenticación" style="max-width: 200px; border: 1px solid #ccc;" />
+</div>
     </p-card>
   </div>
 </div>

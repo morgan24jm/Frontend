@@ -15,7 +15,7 @@ export class AuthService {
     return this.http.post<{ token: string }>(`${this.apiUrl}/login`, credentials);
   }
 
-  register(data: { username: string; password: string }) {
+  register(data: { username: string; password: string; otp: string }) {
      console.log('🔐 Usando AuthService para registro');
     return this.http.post(`${this.apiUrl}/register`, data);
   }

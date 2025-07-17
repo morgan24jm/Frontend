@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CardModule } from 'primeng/card';
@@ -13,6 +14,7 @@ import { AuthService } from '../../../core/auth/auth.service';  // ajusta la rut
   standalone: true,
   imports: [
     ReactiveFormsModule,
+    CommonModule,
     CardModule,
     RouterModule,
     ButtonModule,
@@ -37,21 +39,24 @@ export class RegisterComponent {
     });
   }
 
-  onSubmit(): void {
-    if (this.registerForm.invalid) return;
+  qrCodeBase64: string | null = null; // ← NUEVA propiedad
 
-    this.isLoading = true;
+onSubmit(): void {
+  if (this.registerForm.invalid) return;
 
-    this.authService.register(this.registerForm.value).subscribe({
-      next: (res: any) => {
-        alert('✅ Usuario registrado correctamente');
-        this.router.navigate(['/auth/login']);
-        this.isLoading = false;
-      },
-      error: (err) => {
-        alert(err.error?.error || '❌ Error al registrar');
-        this.isLoading = false;
-      }
-    });
-  }
+  this.isLoading = true;
+
+  this.authService.register(this.registerForm.value).subscribe({
+    next: (res: any) => {
+      this.qrCodeBase64 = res.user?.otp_qr || null; // ← Guardamos el QR
+      alert('✅ Usuario registrado correctamente. Escanea el código con Google Authenticator.');
+      this.isLoading = false;
+    },
+    error: (err) => {
+      alert(err.error?.error || '❌ Error al registrar');
+      this.isLoading = false;
+    }
+  });
+}
+
 }

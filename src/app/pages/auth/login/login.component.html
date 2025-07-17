@@ -18,6 +18,7 @@
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
         <!-- Username -->
         <div class="input-container">
+            <label for="username">Usuario</label>
           <div class="p-inputgroup">
             <span class="p-inputgroup-addon">
               <i class="pi pi-user"></i>
@@ -36,6 +37,7 @@
 
         <!-- Password -->
         <div class="input-container">
+            <label for="password">Contraseña</label>
           <div class="p-inputgroup">
             <span class="p-inputgroup-addon">
               <i class="pi pi-lock"></i>
@@ -52,6 +54,26 @@
             La contraseña es requerida.
           </div>
         </div>
+<!-- OTP -->
+<div class="input-container">
+    <label for="otp">Codigo OTP</label>
+  <div class="p-inputgroup">
+    <span class="p-inputgroup-addon">
+      <i class="pi pi-key"></i>
+    </span>
+    <input
+      pInputText
+      type="password"
+      formControlName="otp"
+      placeholder="Código OTP"
+      maxlength="6"
+      [class.ng-invalid]="loginForm.controls['otp'].invalid && loginForm.controls['otp'].touched"
+    />
+  </div>
+  <div *ngIf="loginForm.controls['otp'].invalid && loginForm.controls['otp'].touched" class="error-message">
+    El código OTP es requerido.
+  </div>
+</div>
 
         <!-- Buttons -->
         <div class="button-container">

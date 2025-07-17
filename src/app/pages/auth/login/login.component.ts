@@ -33,7 +33,8 @@ export class LoginComponent {
   ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
+       otp: ['', Validators.required]
     });
   }
 
