@@ -1,0 +1,17 @@
+.task-create {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.p-field {
+  margin-bottom: 1rem;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}

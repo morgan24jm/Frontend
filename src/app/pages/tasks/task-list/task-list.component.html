@@ -1,10 +1,40 @@
 <nav class="navbar p-d-flex p-jc-between p-ai-center p-p-3 p-shadow-2">
   <h2 class="p-m-0" style="color: #3f51b5;">Mis tareas</h2>
-  <button pButton label="Cerrar sesión" icon="pi pi-sign-out" class="p-button-outlined p-button-danger" (click)="logout()"></button>
+  <div>
+    <button pButton label="Agregar tarea" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="addTask()"></button>
+    <button pButton label="Cerrar sesión" icon="pi pi-sign-out" class="p-button-outlined p-button-danger" (click)="logout()"></button>
+  </div>
 </nav>
 
-<ul>
-  <li *ngFor="let task of tasks">
-    <strong>{{ task.description }}</strong> - {{ task.status }} - {{ task.deadline }}
-  </li>
-</ul>
+<div class="task-list">
+  <p-table [value]="tasks" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20]" responsiveLayout="scroll">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Descripción</th>
+      <th>Estado</th>
+      <th>Fecha límite</th>
+      <th style="width: 150px;">Acciones</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-task>
+    <tr>
+      <td>
+        <span [class.completed]="task.status === 'done'">{{ task.description }}</span>
+      </td>
+      <td>{{ task.status }}</td>
+      <td>{{ task.deadline || 'Sin fecha límite' }}</td>
+      <td>
+        <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editTask(task.id)" title="Editar"></button>
+<button pButton icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteTask(task.id)" title="Eliminar"></button>
+
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<i class="pi pi-pencil" style="font-size: 2rem; color: green;"></i>
+<i class="pi pi-trash" style="font-size: 2rem; color: red;"></i>
+
+
+</div>

@@ -1,0 +1,28 @@
+<div class="task-create">
+  <h2>Crear nueva tarea</h2>
+
+  <div class="p-field">
+    <label for="description">Descripción</label>
+    <input id="description" type="text" pInputText [(ngModel)]="description" />
+  </div>
+
+  <div class="p-field">
+    <label for="deadline">Fecha límite</label>
+    <p-calendar id="deadline" [(ngModel)]="deadline" showIcon="true" dateFormat="yy-mm-dd"></p-calendar>
+  </div>
+
+  <div class="p-field">
+    <label for="status">Estado</label>
+    <p-dropdown
+      id="status"
+      [options]="statusOptions"
+      [(ngModel)]="status"
+      placeholder="Selecciona un estado"
+    ></p-dropdown>
+  </div>
+
+  <div class="buttons">
+    <button pButton label="Crear" icon="pi pi-check" (click)="createTask()"></button>
+    <button pButton label="Cancelar" class="p-button-secondary" (click)="cancel()"></button>
+  </div>
+</div>
