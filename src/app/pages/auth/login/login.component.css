@@ -7,15 +7,12 @@ html, body {
 }
 /* Contenedor principal de la página */
 .auth-container {
+  min-height: 90vh;
   display: flex;
-  min-height: 100vh;
-  height: 100vh;          /* Asegura que la altura sea toda la ventana */
-  width: 100vw;
-  margin: 0;
-  box-shadow: none;       /* Opcional: si no quieres sombra que cree efecto franjas */
-  border-radius: 0;       /* Quita bordes redondeados para que ocupe toda la pantalla */
-  overflow: hidden;
-  background-color: white;
+  align-items: stretch; /* que los hijos estiren toda la altura */
+  justify-content: center;
+  padding-top: 2rem;
+  box-sizing: border-box;
 }
 
 /* Contenedor formulario */

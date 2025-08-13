@@ -1,40 +1,86 @@
 <nav class="navbar p-d-flex p-jc-between p-ai-center p-p-3 p-shadow-2">
-  <h2 class="p-m-0" style="color: #3f51b5;">Mis tareas</h2>
+  <h2 class="p-m-0" style="color: #e2e2e5;">Mis tareas</h2>
   <div>
     <button pButton label="Agregar tarea" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="addTask()"></button>
-    <button pButton label="Cerrar sesión" icon="pi pi-sign-out" class="p-button-outlined p-button-danger" (click)="logout()"></button>
+    <button pButton label="Volver"  [routerLink]="['/index']"></button>
   </div>
 </nav>
 
-<div class="task-list">
-  <p-table [value]="tasks" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20]" responsiveLayout="scroll">
-  <ng-template pTemplate="header">
-    <tr>
-      <th>Descripción</th>
-      <th>Estado</th>
-      <th>Fecha límite</th>
-      <th style="width: 150px;">Acciones</th>
-    </tr>
-  </ng-template>
+<div class="kanban-board">
+  <div
+    class="kanban-column"
+    *ngFor="let column of columns"
+    (dragover)="allowDrop($event)"
+    (drop)="onDrop(column, $event)"
+    [attr.data-status]="column.status">
 
-  <ng-template pTemplate="body" let-task>
-    <tr>
-      <td>
-        <span [class.completed]="task.status === 'done'">{{ task.description }}</span>
-      </td>
-      <td>{{ task.status }}</td>
-      <td>{{ task.deadline || 'Sin fecha límite' }}</td>
-      <td>
-        <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editTask(task.id)" title="Editar"></button>
-<button pButton icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteTask(task.id)" title="Eliminar"></button>
+    <p-panel [header]="column.title">
+      <div
+        *ngFor="let task of column.items"
+        draggable="true"
+        (dragstart)="onDragStart($event, task, column)"
+        (dragend)="task._dragSource = null"
+        class="kanban-card">
 
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
+        <div class="task-created-by">
+          <small><i class="pi pi-user"></i> Creada por: {{ task.created_by }}</small>
+        </div>
 
-<i class="pi pi-pencil" style="font-size: 2rem; color: green;"></i>
-<i class="pi pi-trash" style="font-size: 2rem; color: red;"></i>
+        <div class="task-header">
+          <strong>{{ task.description }}</strong>
+        </div>
 
+        <div class="task-footer">
+          <small class="deadline-chip">
+            <i class="pi pi-calendar"></i>
+            {{ task.deadline || 'Sin fecha límite' }}
+          </small>
 
+          <div class="kanban-actions">
+            <button
+              pButton
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-sm p-button-success p-mr-1"
+              (click)="openEdit(task)">
+            </button>
+            <button
+              pButton
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-sm p-button-danger"
+              (click)="deleteTask(task.id)">
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </p-panel>
+  </div>
 </div>
+
+<p-dialog
+  [(visible)]="showEdit"
+  [modal]="true"
+  appendTo="body"
+  [blockScroll]="true"
+  [draggable]="false"
+  [resizable]="false"
+  header="Editar tarea"
+  [style]="{ width: '480px' }">
+
+  <div class="p-fluid edit-form" *ngIf="editingTask">
+    <div class="p-field">
+      <label>Descripción</label>
+      <input type="text" class="p-inputtext p-component" [(ngModel)]="editModel.description" placeholder="Escribe la descripción">
+    </div>
+
+    <div class="p-field">
+      <label>Fecha límite</label>
+      <input type="date" class="p-inputtext p-component" [(ngModel)]="editModel.deadline">
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <button pButton label="Cancelar" class="p-button-text" (click)="closeEdit()"></button>
+    <button pButton label="Guardar" (click)="saveEdit()"></button>
+  </ng-template>
+</p-dialog>

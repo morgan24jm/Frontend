@@ -1,17 +1,119 @@
+/* ================= Contenedor principal ================= */
 .task-create {
-  max-width: 400px;
-  margin: 2rem auto;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  max-width: 480px;
+  margin: 2.5rem auto;
+  padding: 2rem 1.5rem;
+  border-radius: 14px;
+  background: #1e1e2f; /* Gris oscuro para fondo negro */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.task-create:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.75);
+}
+
+.task-create h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #60a5fa; /* Azul claro para destacar en oscuro */
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+/* ================= Campos del formulario ================= */
 .p-field {
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
 }
 
+.p-field label {
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+  color: #e2e8f0; /* Texto claro */
+}
+
+.p-inputtext,
+.p-calendar,
+.p-dropdown {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid #4b5563;
+  padding: 0.6rem 0.75rem;
+  background: #111827; /* Fondo oscuro para inputs */
+  color: #f1f5f9; /* Texto claro */
+  transition: all 0.2s ease;
+}
+
+.p-inputtext:focus,
+.p-calendar input:focus,
+.p-dropdown input:focus {
+  outline: none;
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+}
+
+/* ================= Botones ================= */
 .buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 1.5rem;
+  margin-top: 1.75rem;
+  gap: 0.5rem;
+}
+
+.buttons button {
+  flex: 1;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.p-button {
+  border-radius: 10px;
+  padding: 0.65rem 1.25rem;
+}
+
+.p-button .pi {
+  margin-right: 0.35rem;
+  vertical-align: middle;
+}
+
+.p-button-success {
+  background: linear-gradient(135deg, #10b981, #34d399);
+  border: none;
+  color: #fff;
+}
+
+.p-button-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35);
+}
+
+.p-button-secondary {
+  background: linear-gradient(135deg, #6b7280, #9ca3af);
+  border: none;
+  color: #fff;
+}
+
+.p-button-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(107, 114, 128, 0.35);
+}
+
+/* ================= Responsivo ================= */
+@media (max-width: 500px) {
+  .task-create {
+    margin: 1.5rem;
+    padding: 1.5rem 1rem;
+  }
+
+  .buttons {
+    flex-direction: column;
+  }
+
+  .buttons button {
+    width: 100%;
+  }
 }

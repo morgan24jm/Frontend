@@ -1,5 +1,5 @@
 <div class="auth-container register-container">
-  <!-- Imagen primero -->
+  <!-- Imagen -->
   <div class="auth-image-wrapper register-image-wrapper">
     <div class="auth-image-text">
       <h1>Register</h1>
@@ -7,14 +7,10 @@
     </div>
   </div>
 
-  <!-- Formulario después -->
+  <!-- Formulario -->
   <div class="auth-form-wrapper register-form-wrapper">
     <p-card class="auth-card register-card">
-      <ng-template pTemplate="header">
-        <div class="card-header">
-          <i class="pi pi-user-plus user-icon"></i>
-        </div>
-      </ng-template>
+      <ng-template pTemplate="header"></ng-template>
 
       <ng-template pTemplate="title">
         <h2 class="register-title auth-title">Registro</h2>
@@ -34,34 +30,89 @@
           </div>
         </div>
 
+        <!-- Email -->
+        <div class="input-container">
+          <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">
+              <i class="pi pi-envelope"></i>
+            </span>
+            <input
+              pInputText
+              type="email"
+              placeholder="Email"
+              formControlName="email"
+              [class.ng-invalid]="registerForm.controls['email'].invalid && registerForm.controls['email'].touched"
+            />
+          </div>
+
+          <div *ngIf="registerForm.controls['email'].invalid && registerForm.controls['email'].touched" class="error-message">
+            <div *ngIf="registerForm.controls['email'].errors?.['required']">El email es requerido.</div>
+            <div *ngIf="registerForm.controls['email'].errors?.['email']">Debe ser un email válido.</div>
+          </div>
+        </div>
+
+        <!-- Password -->
         <div class="input-container">
           <div class="p-inputgroup">
             <span class="p-inputgroup-addon">
               <i class="pi pi-lock"></i>
             </span>
-            <input pInputText type="password" placeholder="Password" formControlName="password" />
+            <input
+              pInputText
+              type="password"
+              placeholder="Password"
+              formControlName="password"
+              [class.ng-invalid]="registerForm.controls['password'].invalid && registerForm.controls['password'].touched"
+            />
+          </div>
+
+          <div *ngIf="registerForm.controls['password'].invalid && registerForm.controls['password'].touched" class="error-message">
+            <div *ngIf="registerForm.controls['password'].errors?.['required']">La contraseña es requerida.</div>
+            <div *ngIf="registerForm.controls['password'].errors?.['minlength']">La contraseña debe tener al menos 8 caracteres.</div>
+            <div *ngIf="registerForm.controls['password'].errors?.['pattern']">
+              La contraseña debe contener al menos una mayúscula, un número y un carácter especial (!&#64;#$%^&*).
+            </div>
           </div>
         </div>
 
         <div class="button-container">
-          <button
-            pButton
-            label="Registrarse"
-            type="submit"
-            [disabled]="registerForm.invalid || isLoading"
-            [loading]="isLoading"
-          ></button>
+          <button pButton label="Registrarse" type="submit" [disabled]="registerForm.invalid || isLoading" [loading]="isLoading"></button>
         </div>
 
         <div class="back-to-login">
           <p>¿Ya tienes cuenta?</p>
           <button pButton label="Iniciar sesión" class="p-button-text" routerLink="/auth/login"></button>
         </div>
+
       </form>
-      <div *ngIf="qrCodeBase64" style="text-align: center; margin-top: 2rem;">
-  <h4>Escanea este código QR con Google Authenticator:</h4>
-  <img [src]="'data:image/png;base64,' + qrCodeBase64" alt="QR de autenticación" style="max-width: 200px; border: 1px solid #ccc;" />
-</div>
     </p-card>
   </div>
 </div>
+
+<!-- Modal con el QR -->
+
+<p-dialog
+  [(visible)]="showQr"
+  [modal]="true"
+  appendTo="body"
+  [blockScroll]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [closeOnEscape]="true"
+  (onHide)="closeAndGoToLogin()"
+  header="Verifica tu identidad"
+  [style]="{ width: '360px' }">
+
+  <div class="qr-container" *ngIf="qrCodeBase64">
+    <h4>Escanea este código QR con Google Authenticator</h4>
+   <img [src]="'data:image/png;base64,' + qrCodeBase64" alt="QR de autenticación" />
+  </div>
+
+  <ng-template pTemplate="footer">
+  <button
+    pButton
+    label="Cerrar e iniciar sesión"
+    (click)="closeAndGoToLogin()">
+  </button>
+</ng-template>
+</p-dialog>

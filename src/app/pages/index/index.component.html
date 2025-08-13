@@ -1,0 +1,26 @@
+<nav class="navbar">
+  <div class="brand">
+    <span class="logo-circle">T</span>
+    <span class="logo-text">Task App</span>
+  </div>
+
+  <div class="nav-actions">
+    <button pButton label="Tareas"  [routerLink]="['/task/task-list']"></button>
+    <button pButton label="Dashboard logs" [routerLink]="['/dashboard']"></button>
+     <button pButton label="Cerrar sesión" icon="pi pi-sign-out" class=" p-button-danger" (click)="logout()"></button>
+  </div>
+</nav>
+
+<main class="hero">
+  <div class="hero-text">
+    <h1>Bienvenido a Task App</h1>
+    <p>Organiza tus tareas, sigue tu progreso y mantente al día con tus actividades.</p>
+    <div class="cta">
+  <button pButton label="Ir a mis tareas" icon="pi pi-check-circle" [routerLink]="['/task/task-list']"></button>
+  <button pButton label="Ver logs" icon="pi pi-chart-line" class="p-button-outlined" [routerLink]="['/dashboard']"></button>
+</div>
+  </div>
+
+  <div class="hero-image"></div>
+
+</main>

@@ -1,12 +1,17 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { RouterModule } from '@angular/router';
-import { AuthService } from '../../../core/auth/auth.service'; 
+import { AuthService } from '../../../core/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -17,10 +22,10 @@ import { AuthService } from '../../../core/auth/auth.service';
     RouterModule,
     CardModule,
     ButtonModule,
-    InputTextModule
+    InputTextModule,
   ],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   loginForm: FormGroup;
@@ -32,9 +37,9 @@ export class LoginComponent {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      username: ['', Validators.required],
+      identifier: ['', Validators.required],
       password: ['', Validators.required],
-       otp: ['', Validators.required]
+      otp: ['', [Validators.required, Validators.maxLength(6)]],
     });
   }
 
@@ -51,13 +56,13 @@ export class LoginComponent {
         this.isLoading = false;
         console.log('✅ Login exitoso:', res);
         localStorage.setItem('token', res.token);
-        this.router.navigate(['/task/task-list']);
+         this.router.navigate(['/index']);
       },
       error: (err) => {
         this.isLoading = false;
         console.error('❌ Error en login:', err);
         alert(err.error?.error || 'Error en login');
-      }
+      },
     });
   }
 }

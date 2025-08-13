@@ -1,0 +1,30 @@
+<!-- pages/dashboard-logs/dashboard-logs.component.html -->
+<nav class="dashbar">
+  <h2>Dashboard de Logs</h2>
+  <div class="actions">
+    <button pButton label="Volver"  [routerLink]="['/index']"></button>
+    
+  </div>
+</nav>
+
+<section class="kpis">
+  <p-card header="Total logs"><div class="kpi">{{ totalLogs }}</div></p-card>
+  <p-card header="Promedio (ms)"><div class="kpi">{{ avgMs }}</div></p-card>
+  <p-card header="Más rápido (ms)"><div class="kpi">{{ minMs }}</div></p-card>
+  <p-card header="Más lento (ms)"><div class="kpi">{{ maxMs }}</div></p-card>
+</section>
+
+<section class="charts">
+  <p-card header="Status codes">
+<p-chart *ngIf="statusChartData" type="bar" [data]="statusChartData" [options]="statusChartOptions" style="height:300px"></p-chart>
+  </p-card>
+
+  <p-card header="APIs más consumidas (Top 7)">
+   <p-chart *ngIf="usageChartData" type="bar" [data]="usageChartData" [options]="usageChartOptions" style="height:300px"></p-chart>
+    <div class="api-tips">
+      <span><strong>Más usada:</strong> {{ mostUsedApi || '—' }}</span>
+      <span><strong>Menos usada:</strong> {{ leastUsedApi || '—' }}</span>
+    </div>
+  </p-card>
+</section>
+

@@ -20,9 +20,9 @@ export class TaskCreateComponent {
   status: string = 'pending';
 
   statusOptions = [
-    { label: 'Pending', value: 'pending' },
-    { label: 'In Progress', value: 'in_progress' },
-    { label: 'Done', value: 'done' }
+    { label: 'Pendiente', value: 'pending' },
+    { label: 'En Progreso', value: 'in_progress' },
+    { label: 'Realizada', value: 'done' }
   ];
 
   constructor(private taskService: TaskService, private router: Router) {}
@@ -35,7 +35,9 @@ export class TaskCreateComponent {
 
     const taskPayload = {
       description: this.description,
-      deadline: this.deadline ? this.deadline.toISOString() : null,
+      deadline: this.deadline
+    ? `${this.deadline.getFullYear()}-${String(this.deadline.getMonth() + 1).padStart(2, '0')}-${String(this.deadline.getDate()).padStart(2, '0')}`
+    : null,
       status: this.status,
       isalive: true
     };
